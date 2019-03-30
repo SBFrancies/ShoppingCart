@@ -2,6 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ShoppingCartApi.Common\ShoppingCartApi.Common.csproj" />
+    <ProjectReference Include="..\ShoppingCartApi.Data\ShoppingCartApi.Data.csproj" />
+  </ItemGroup>
 
 </Project>

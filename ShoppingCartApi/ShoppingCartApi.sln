@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingCartApi.Api", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingCartApi.UnitTests", "test\ShoppingCartApi.UnitTests\ShoppingCartApi.UnitTests.csproj", "{38A62850-E830-4135-A526-10BB0B8A3774}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingCatClient.IntegrationTests", "test\ShoppingCatClient.IntegrationTests\ShoppingCatClient.IntegrationTests.csproj", "{558989C0-ABA3-420A-8DED-663CC0EC5E9A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingCartClient.IntegrationTests", "test\ShoppingCatClient.IntegrationTests\ShoppingCartClient.IntegrationTests.csproj", "{558989C0-ABA3-420A-8DED-663CC0EC5E9A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingCartApi.Access", "src\ShoppingCartApi.Access\ShoppingCartApi.Access.csproj", "{0761BB2D-1954-4245-AE0C-0F4DF3653DF2}"
 EndProject
