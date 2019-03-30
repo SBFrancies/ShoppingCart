@@ -13,7 +13,7 @@ namespace ShoppingCartApi.Data
         {
         }
 
-        public DbSet<UserEntity> Users { get; set; }
+        public DbSet<CustomerEntity> Customers { get; set; }
 
         public DbSet<OrderEntity> Orders { get; set; }
 
@@ -25,7 +25,7 @@ namespace ShoppingCartApi.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<UserEntity>(entity =>
+            modelBuilder.Entity<CustomerEntity>(entity =>
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).ValueGeneratedNever();
@@ -37,10 +37,10 @@ namespace ShoppingCartApi.Data
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).ValueGeneratedNever();
-                entity.HasOne(e => e.User)
+                entity.HasOne(e => e.Customer)
                     .WithMany(e => e.Orders)
-                    .HasForeignKey(e => e.UserId)
-                    .HasConstraintName("FK_User_Orders");
+                    .HasForeignKey(e => e.CustomerId)
+                    .HasConstraintName("FK_Customer_Orders");
             });
 
             modelBuilder.Entity<ProductEntity>(entity =>

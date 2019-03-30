@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ShoppingCartApi.Data.Entities
 {
-    public class UserEntity
+    public class CustomerEntity
     {
         public Guid Id { get; set; }
 

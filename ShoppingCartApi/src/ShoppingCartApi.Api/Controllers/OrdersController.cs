@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ShoppingCartApi.Api.Filters;
+using ShoppingCartApi.Common.Exceptions;
 using ShoppingCartApi.Common.Interface;
+using ShoppingCartApi.Common.Models;
 
 namespace ShoppingCartApi.Api.Controllers
 {
@@ -24,37 +27,84 @@ namespace ShoppingCartApi.Api.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(IReadOnlyCollection<Order>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public IActionResult Get()
         {
-            throw new NotImplementedException();
+            IReadOnlyCollection<Order> orders = _orderAccess.GetAllOrders();
+
+            if (!orders.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(orders);
         }
 
         [HttpGet]
         [Route("{id}")]
+        [ProducesResponseType(typeof(Order), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public IActionResult Get([FromRoute]Guid id)
         {
-            throw new NotImplementedException();
+            Order order = _orderAccess.GetOrder(id);
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(order);
         }
 
         [HttpGet]
-        [Route("{userId}/user")]
-        public IActionResult GetUserOrders([FromRoute]Guid userId)
+        [Route("{customerId}/customer")]
+        [ProducesResponseType(typeof(IReadOnlyCollection<Order>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        public IActionResult GetCustomerOrders([FromRoute]Guid customerId)
         {
-            throw new NotImplementedException();
+            IReadOnlyCollection<Order> orders = _orderAccess.GetCustomerOrders(customerId);
+
+            if (!orders.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(orders);
         }
 
         [HttpPost]
-        [Route("{userId")]
-        public async Task<IActionResult> Post([FromRoute]Guid userId, CancellationToken cancellationToken = default)
+        [Route("{customerId}")]
+        [ProducesResponseType(typeof(Order), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> PostAsync([FromRoute]Guid customerId, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Order order = await _orderAccess.CreateOrderAsync(customerId, cancellationToken);
+
+                return Ok(order);
+            }
+
+            catch (CustomerNotFoundException)
+            {
+                return NotFound();
+            }
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public async Task<IActionResult> Delete([FromRoute]Guid id, CancellationToken cancellationToken = default)
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> DeleteAsync([FromRoute]Guid id, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            await _orderAccess.ClearOrderAsync(id, cancellationToken);
+
+            return Ok();
         }
     }
 }

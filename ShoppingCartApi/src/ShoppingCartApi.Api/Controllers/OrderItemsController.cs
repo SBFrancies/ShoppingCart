@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShoppingCartApi.Api.Filters;
+using ShoppingCartApi.Common.Exceptions;
 using ShoppingCartApi.Common.Interface;
+using ShoppingCartApi.Common.Models;
 
 namespace ShoppingCartApi.Api.Controllers
 {
@@ -26,30 +29,95 @@ namespace ShoppingCartApi.Api.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [ProducesResponseType(typeof(OrderItem), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public IActionResult Get([FromRoute]Guid id)
         {
-            throw new NotImplementedException();
+            OrderItem orderItem = _orderItemAccess.GetOrderItem(id);
+
+            if (orderItem == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(orderItem);
         }
 
         [HttpPost]
-        [Route("{orderId}/{productId}/{quantity?}")]
-        public async Task<IActionResult> Post([FromRoute]Guid orderId, [FromRoute]Guid productId, [FromRoute]int quantity = 1, CancellationToken cancellationToken = default)
+        [Route("{orderId}/{productId}/{quantity=1}")]
+        [ProducesResponseType(typeof(OrderItem), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> PostAsync([FromRoute]Guid orderId, [FromRoute]Guid productId, [FromRoute]int quantity = 1, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (quantity < 1)
+                {
+                    return BadRequest();
+                }
+
+                OrderItem orderItem = await _orderItemAccess.CreateOrderItemAsync(orderId, productId, quantity, cancellationToken);
+                return Ok(orderItem);
+            }
+
+            catch (Exception exception) when (exception is OrderNotFoundException || exception is ProductNotFoundException)
+            {
+                return NotFound();
+            }
         }
 
         [HttpPut]
         [Route("{id}/{quantity}")]
-        public async Task<IActionResult> Put([FromRoute]Guid id, [FromRoute]int quantity, CancellationToken cancellationToken = default)
+        [ProducesResponseType(typeof(OrderItem), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> PutAsync([FromRoute]Guid id, [FromRoute]int quantity, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (quantity == 0)
+                {
+                    return RedirectToAction("DeleteAsync", new {id, cancellationToken});
+                }
+
+                if (quantity < 1)
+                {
+                    return BadRequest();
+                }
+
+                OrderItem orderItem = await _orderItemAccess.UpdateOrderItemQuantityAsync(id, quantity, cancellationToken);
+
+                return Ok(orderItem);
+            }
+
+            catch (OrderItemNotFoundException)
+            {
+                return NotFound();
+            }
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public async Task<IActionResult> Delete([FromRoute]Guid id, CancellationToken cancellationToken = default)
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> DeleteAsync([FromRoute]Guid id, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _orderItemAccess.RemoveOrderItemAsync(id, cancellationToken);
+
+                return Ok();
+            }
+
+            catch (OrderItemNotFoundException)
+            {
+                return NotFound();
+            }
         }
     }
 }

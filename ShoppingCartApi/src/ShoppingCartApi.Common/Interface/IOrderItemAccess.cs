@@ -11,8 +11,10 @@ namespace ShoppingCartApi.Common.Interface
     {
         OrderItem GetOrderItem(Guid orderItemId);
 
-        Task<OrderItem> UpdateOrderItemQuantity(Guid orderItemId, int quantity, CancellationToken cancellationToken = default);
+        Task<OrderItem> CreateOrderItemAsync(Guid orderId, Guid productId, int quantity, CancellationToken cancellationToken = default);
 
-        Task RemoveOrderItem(Guid orderItem, CancellationToken cancellationToken = default);
+        Task<OrderItem> UpdateOrderItemQuantityAsync(Guid orderItemId, int quantity, CancellationToken cancellationToken = default);
+
+        Task RemoveOrderItemAsync(Guid orderItemId, CancellationToken cancellationToken = default);
     }
 }

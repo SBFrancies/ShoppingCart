@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9BBB6C3C-934
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{37135A2F-C75F-44BB-BD61-55BF8B3A4172}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopppingCartClient.Client", "src\ShopppingCartClient.Client\ShopppingCartClient.Client.csproj", "{3F1B53F7-EA0F-4FC3-A652-5DFC23536CC2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingCartClient.Client", "src\ShopppingCartClient.Client\ShoppingCartClient.Client.csproj", "{3F1B53F7-EA0F-4FC3-A652-5DFC23536CC2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingCartClient.UnitTests", "test\ShoppingCartClient.UnitTests\ShoppingCartClient.UnitTests.csproj", "{172AD89D-823F-4EC0-B0F8-E0477CB19CDD}"
 EndProject

@@ -8,9 +8,9 @@ namespace ShoppingCartApi.Data.Entities
     {
         public Guid Id { get; set; }
 
-        public Guid  UserId { get; set; }
+        public Guid  CustomerId { get; set; }
 
-        public virtual UserEntity User { get; set; }
+        public virtual CustomerEntity Customer { get; set; }
 
         public DateTimeOffset CreatedAt { get; set; }
 

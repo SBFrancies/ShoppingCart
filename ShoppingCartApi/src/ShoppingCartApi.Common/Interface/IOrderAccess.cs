@@ -11,12 +11,12 @@ namespace ShoppingCartApi.Common.Interface
     {
         IReadOnlyCollection<Order> GetAllOrders();
 
-        IReadOnlyCollection<Order> GetUserOrders(Guid userId);
+        IReadOnlyCollection<Order> GetCustomerOrders(Guid customerId);
 
         Order GetOrder(Guid orderId);
 
-        Task<Order> CreateOrder(Guid userId, CancellationToken cancellationToken = default );
+        Task<Order> CreateOrderAsync(Guid customerId, CancellationToken cancellationToken = default );
 
-        Task ClearOrder(Guid orderId, CancellationToken cancellationToken = default);
+        Task ClearOrderAsync(Guid orderId, CancellationToken cancellationToken = default);
     }
 }
