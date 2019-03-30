@@ -10,7 +10,7 @@ namespace ShoppingCartClient.Client.ApiClient.Models
 {
     public partial class OrderItem
     {
-        public OrderItem(Product product = default, int? quantity = default)
+        public OrderItem(Product product = default, int quantity = default)
         {
             Product = product;
             Quantity = quantity;
@@ -20,7 +20,6 @@ namespace ShoppingCartClient.Client.ApiClient.Models
         public Product Product { get; set; }
 
         [JsonProperty("quantity")]
-        public int? Quantity { get; set; }
-
+        public int Quantity { get; set; }
     }
 }
