@@ -1,4 +1,4 @@
-# ShoppinCart
+# ShoppingCart
 
 ## Description
 A small API to allow users to access and update a shopping cart as well as a client library to call the API. The project has been built using .Net Core 2.2 with Entity Framework Core. It uses an SQL Server back end.
