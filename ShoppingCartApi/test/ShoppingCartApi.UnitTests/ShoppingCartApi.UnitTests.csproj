@@ -18,4 +18,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\ShoppingCartApi.Data\ShoppingCartApi.Data.csproj" />
+  </ItemGroup>
+
 </Project>
