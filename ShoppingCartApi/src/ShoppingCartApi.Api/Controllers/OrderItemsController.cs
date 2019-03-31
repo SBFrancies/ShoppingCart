@@ -79,11 +79,6 @@ namespace ShoppingCartApi.Api.Controllers
         {
             try
             {
-                if (quantity == 0)
-                {
-                    return RedirectToAction("DeleteAsync", new {id, cancellationToken});
-                }
-
                 if (quantity < 1)
                 {
                     return BadRequest();
