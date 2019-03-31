@@ -9,6 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoFixture" Version="4.8.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
     <PackageReference Include="Moq" Version="4.10.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
@@ -19,6 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\ShoppingCartApi.Api\ShoppingCartApi.Api.csproj" />
+    <ProjectReference Include="..\..\src\ShoppingCartApi.Common\ShoppingCartApi.Common.csproj" />
     <ProjectReference Include="..\..\src\ShoppingCartApi.Data\ShoppingCartApi.Data.csproj" />
   </ItemGroup>
 
